@@ -1,0 +1,17 @@
+FROM mariadb:12.1.2
+
+ARG PWD
+
+ENV MARIADB_ROOT_PASSWORD=$PWD
+
+ENV MARIADB_USER=testuser
+
+ENV MARIADB_PASSWORD=$PWD
+
+ENV MARIADB_DATABASE=testdb
+
+COPY ./init.sql /docker-entrypoint-initdb.d/init.sql
+
+EXPOSE 3306
+
+CMD ["echo", "Bubblegum"]

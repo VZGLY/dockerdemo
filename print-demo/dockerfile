@@ -1,0 +1,19 @@
+FROM alpine:3.20
+
+# Installer les dépendances pour télécharger et extraire Node
+RUN apk add --no-cache \
+    wget \
+    tar \
+    libstdc++ \
+    ca-certificates
+
+# Télécharger Node.js LTS (20.18.0) depuis les builds officiels pour musl/Alpine
+ARG NODE_VERSION=20.18.0
+RUN NODE_URL="https://unofficial-builds.nodejs.org/download/release/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64-musl.tar.gz" \
+    && wget -qO- "$NODE_URL" | tar -xz -C /usr/local --strip-components=1
+
+# Vérifier l'installation
+RUN node --version && npm --version
+
+# ENTRYPOINT : affiche la version de Node (node -v)
+ENTRYPOINT ["node", "--version"]
