@@ -1,0 +1,23 @@
+name: project-hello
+
+services:
+  front:
+    container_name: react-front
+    build: 
+      context: ./my-app
+      args:
+        API_URL: http://localhost:38080
+    # networks:
+    #   - front_back_network
+    ports:
+      - 30080:80
+  back:
+    container_name: back-java
+    image: hellojava:2.0
+    # networks:
+    #   - front_back_network
+    ports: 
+      - 38080:8080
+
+# networks:
+#   front_back_network:
